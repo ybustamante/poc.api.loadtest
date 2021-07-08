@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  poc.api.loadtest:
+    image: ${DOCKER_REGISTRY-}pocapiloadtest
+    build:
+      context: .
+      dockerfile: poc.api.loadtest/Dockerfile
