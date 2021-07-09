@@ -6,10 +6,10 @@ metadata:
     k8s-app: fibonacciapi
 spec:
   selector:     
-      component: apipoc
+    k8s-app: fibonacciapi
   ports:
   - port: 40430
-    targetPort: 80
+    targetPort: 8090
   type: LoadBalancer
   externalTrafficPolicy: Cluster
 

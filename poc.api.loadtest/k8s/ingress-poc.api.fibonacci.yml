@@ -2,16 +2,15 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-poc.api.fibonacci
-  labels:
-    name: ingress-poc.api.fibonacci
+  annotations:
+    # use the shared ingress-nginx
+    kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
   - http:
       paths: 
-      - pathType: Prefix
-        path: "/?(.*)"
+      - path: /
+        pathType: Prefix
         backend:
-          service:
-            name: pocapifibonacci-service
-            port: 
-              number: 40430
+          serviceName: pocapifibonacci-service
+          servicePort: 40430
