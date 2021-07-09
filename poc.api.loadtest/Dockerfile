@@ -2,15 +2,15 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
-EXPOSE 80
+EXPOSE 8090
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["poc.api.loadtest.csproj", ""]
-RUN dotnet restore "poc.api.loadtest.csproj"
+COPY ["poc.api.loadtest/poc.api.loadtest.csproj", "poc.api.loadtest/"]
+RUN dotnet restore "poc.api.loadtest/poc.api.loadtest.csproj"
 COPY . .
-WORKDIR "/src/"
+WORKDIR "/src/poc.api.loadtest"
 RUN dotnet build "poc.api.loadtest.csproj" -c Release -o /app/build
 
 FROM build AS publish
@@ -20,3 +20,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "poc.api.loadtest.dll"]
+ENV ASPNETCORE_URLS=http://+:8090

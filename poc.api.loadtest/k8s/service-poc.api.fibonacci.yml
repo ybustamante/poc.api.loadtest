@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pocapifibonacci-service
+  labels:
+    k8s-app: fibonacciapi
+spec:
+  selector:     
+      component: apipoc
+  ports:
+  - port: 40430
+    targetPort: 80
+  type: LoadBalancer
+  externalTrafficPolicy: Cluster
+

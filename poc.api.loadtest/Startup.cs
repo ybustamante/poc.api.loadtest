@@ -52,6 +52,7 @@ namespace poc.api.loadtest
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute("default", "swagger/index.html");
                 endpoints.MapControllers();
             });
         }

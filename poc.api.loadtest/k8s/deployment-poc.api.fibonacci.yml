@@ -1,0 +1,25 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: pocapifibonacci-deployment
+  labels:
+    k8s-app: fibonacciapi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      component: apipoc
+  template:
+    metadata:
+      labels:
+        component: apipoc
+    spec:
+      containers:
+        - name: fibonacciapi
+          image: ybustamante/fibonacciapi
+          ports:
+            - containerPort: 40430
+          resources:
+            limits:
+              memory: 129Mi
+              cpu: "250m"
