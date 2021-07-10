@@ -1,16 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace poc.api.loadtest
 {
@@ -39,21 +33,18 @@ namespace poc.api.loadtest
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "poc.api.loadtest v1"));
+                app.UseDeveloperExceptionPage();                
             }
-
-            //app.UseHttpsRedirection();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "poc.api.loadtest v1"));            
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthorization();            
 
             app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute("default", "swagger/index.html");
-                endpoints.MapControllers();
+            {                
+                endpoints.MapControllers();                
             });
         }
     }

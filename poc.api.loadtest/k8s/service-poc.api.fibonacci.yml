@@ -1,15 +1,20 @@
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
-  name: pocapifibonacci-service
+  name: pocapifibonacciservice
+  namespace: default
   labels:
     k8s-app: fibonacciapi
 spec:
   selector:     
     k8s-app: fibonacciapi
   ports:
-  - port: 40430
+  - port: 8090
+    protocol: TCP
     targetPort: 8090
   type: LoadBalancer
+  sessionAffinity: None
+  ipFamilies:
+    - IPv4
   externalTrafficPolicy: Cluster
 

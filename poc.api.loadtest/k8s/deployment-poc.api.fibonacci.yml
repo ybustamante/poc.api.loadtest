@@ -1,22 +1,23 @@
-﻿apiVersion: apps/v1
-kind: Deployment
+﻿kind: Deployment
+apiVersion: apps/v1
 metadata: 
   name: pocapifibonacci-deployment
   labels:
     k8s-app: fibonacciapi
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      component: apipoc
+      k8s-app: fibonacciapi
   template:
     metadata:
+      name: fibonacciapi
       labels:
-        component: apipoc
+        k8s-app: fibonacciapi
     spec:
       containers:
         - name: fibonacciapi
-          image: ybustamante/fibonacciapi
+          image: ybustamante/fibonacciapi:latest
           ports:
             - containerPort: 40430
           resources:

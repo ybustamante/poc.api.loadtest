@@ -3,6 +3,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
 EXPOSE 8090
+
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["poc.api.loadtest/poc.api.loadtest.csproj", "poc.api.loadtest/"]

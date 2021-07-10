@@ -2,7 +2,10 @@ version: '3.4'
 
 services:
   poc.api.loadtest:
-    image: ybustamante/fibonacciapi
+    image: ybustamante/fibonacciapi:latest
     build:
       context: .
       dockerfile: poc.api.loadtest/Dockerfile
+    ports:
+        - published: 9001
+          target: 8090

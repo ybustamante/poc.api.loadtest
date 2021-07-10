@@ -7,10 +7,13 @@ metadata:
     kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
-  - http:
-      paths: 
-      - path: /
-        pathType: Prefix
+  - host: kubernetes.docker.internal
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
         backend:
-          serviceName: pocapifibonacci-service
-          servicePort: 40430
+          service:
+            name: pocapifibonacciservice
+            port: 
+              number: 8090
