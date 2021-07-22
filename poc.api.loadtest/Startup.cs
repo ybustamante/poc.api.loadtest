@@ -35,7 +35,10 @@ namespace poc.api.loadtest
             {
                 app.UseDeveloperExceptionPage();                
             }
-            app.UseSwagger();
+            app.UseSwagger(c =>
+            {
+                c.SerializeAsV2 = true;
+            });
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "poc.api.loadtest v1"));            
 
             app.UseRouting();
