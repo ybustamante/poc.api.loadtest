@@ -10,9 +10,26 @@ namespace poc.api.loadtest
 {
     public class Startup
     {
+        private ILogger<Startup> _logger;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            var config = new AWS.Logger.AWSLoggerConfig("yb.webapp.trading")
+            {
+                Region = "us-east-1"
+            };
+
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddFilter("Microsoft", LogLevel.Warning)
+                    .AddFilter("System", LogLevel.Warning)
+                    .AddFilter("Program", LogLevel.Debug)
+                    .SetMinimumLevel(LogLevel.Information)
+                    .AddConsole();
+            }).AddAWSProvider(config);
+
+            _logger = loggerFactory.CreateLogger<Startup>();
         }
 
         public IConfiguration Configuration { get; }
@@ -26,6 +43,11 @@ namespace poc.api.loadtest
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "poc.api.loadtest", Version = "v1" });
             });
+            services.AddLogging(config =>
+            {
+                config.AddAWSProvider(Configuration.GetAWSLoggingConfigSection());
+                config.SetMinimumLevel(LogLevel.Debug);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,7 +56,8 @@ namespace poc.api.loadtest
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();                
-            }
+            }            
+
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "poc.api.loadtest v1"));            
 

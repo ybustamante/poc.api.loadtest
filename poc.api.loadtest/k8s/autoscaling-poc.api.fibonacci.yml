@@ -12,18 +12,34 @@ spec:
   behavior:
     scaleDown:
       stabilizationWindowSeconds: 60
+      policies:
+        - periodSeconds: 60
+          type: Pods
+          value: 1
+      selectPolicy: Min
     scaleUp:
-      stabilizationWindowSeconds: 10
+      stabilizationWindowSeconds: 0
   metrics:
   - type: Resource
     resource:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 50
+        averageUtilization: 70
   - type: Resource
     resource:
       name: memory
       target:
         type: Utilization
         averageValue: 60Mi
+  - type: Object
+    object:
+      metric:
+        name: requests-per-second
+      describedObject:
+        apiVersion: networking.k8s.io/v1beta1
+        kind: Ingress
+        name: main-route
+      target:
+        type: Value
+        value: 1k
