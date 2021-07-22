@@ -10,26 +10,9 @@ namespace poc.api.loadtest
 {
     public class Startup
     {
-        private ILogger<Startup> _logger;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-            var config = new AWS.Logger.AWSLoggerConfig("yb.webapp.trading")
-            {
-                Region = "us-east-1"
-            };
-
-            using var loggerFactory = LoggerFactory.Create(builder =>
-            {
-                builder.AddFilter("Microsoft", LogLevel.Warning)
-                    .AddFilter("System", LogLevel.Warning)
-                    .AddFilter("Program", LogLevel.Debug)
-                    .SetMinimumLevel(LogLevel.Information)
-                    .AddConsole();
-            }).AddAWSProvider(config);
-
-            _logger = loggerFactory.CreateLogger<Startup>();
         }
 
         public IConfiguration Configuration { get; }
@@ -45,6 +28,9 @@ namespace poc.api.loadtest
             });
             services.AddLogging(config =>
             {
+                config.AddFilter("Microsoft", LogLevel.Warning);
+                config.AddFilter("System", LogLevel.Warning);
+                config.AddFilter("Program", LogLevel.Debug);
                 config.AddAWSProvider(Configuration.GetAWSLoggingConfigSection());
                 config.SetMinimumLevel(LogLevel.Debug);
             });
@@ -55,19 +41,19 @@ namespace poc.api.loadtest
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();                
-            }            
+                app.UseDeveloperExceptionPage();
+            }
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "poc.api.loadtest v1"));            
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "poc.api.loadtest v1"));
 
             app.UseRouting();
 
-            app.UseAuthorization();            
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
-            {                
-                endpoints.MapControllers();                
+            {
+                endpoints.MapControllers();
             });
         }
     }
