@@ -1,8 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: pocapifibonacciservice
-  namespace: default
+  name: pocapifibonacciservice  
   labels:
     k8s-app: fibonacciapi
 spec:

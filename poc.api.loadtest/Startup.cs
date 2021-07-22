@@ -26,6 +26,14 @@ namespace poc.api.loadtest
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "poc.api.loadtest", Version = "v1" });
             });
+            services.AddLogging(config =>
+            {
+                config.AddFilter("Microsoft", LogLevel.Warning);
+                config.AddFilter("System", LogLevel.Warning);
+                config.AddFilter("Program", LogLevel.Debug);
+                config.AddAWSProvider(Configuration.GetAWSLoggingConfigSection());
+                config.SetMinimumLevel(LogLevel.Debug);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,7 +41,7 @@ namespace poc.api.loadtest
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();                
+                app.UseDeveloperExceptionPage();
             }
             app.UseSwagger(c =>
             {
@@ -43,11 +51,11 @@ namespace poc.api.loadtest
 
             app.UseRouting();
 
-            app.UseAuthorization();            
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
-            {                
-                endpoints.MapControllers();                
+            {
+                endpoints.MapControllers();
             });
         }
     }
