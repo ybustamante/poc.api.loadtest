@@ -1,0 +1,18 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: poc.api.fibonacci
+  labels:
+    k8s-app: fibonacciapi
+spec:
+  host: >-
+    poc-api-fibonacci-sandboxdevelopmentframeworks.apps.arcsandbox.zezd.p1.openshiftapps.com
+  to:
+    kind: Service
+    name: pocapifibonacciservice
+    weight: 100
+  port:
+    targetPort: 8090
+  tls:
+    termination: edge
+  wildcardPolicy: None

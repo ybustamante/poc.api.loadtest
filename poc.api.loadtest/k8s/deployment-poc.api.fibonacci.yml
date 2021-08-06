@@ -19,7 +19,7 @@ spec:
         - name: fibonacciapi
           image: ybustamante/fibonacciapi:latest
           ports:
-            - containerPort: 40430
+            - containerPort: 8090
           resources:
             limits:
               memory: 129Mi
