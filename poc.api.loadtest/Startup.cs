@@ -31,11 +31,10 @@ namespace poc.api.loadtest
             });
             services.AddLogging(config =>
             {
-                config.AddFilter("Microsoft", LogLevel.Warning);
+                config.AddFilter("Microsoft", LogLevel.Information);
                 config.AddFilter("System", LogLevel.Warning);
-                config.AddFilter("Program", LogLevel.Debug);
-                config.AddAWSProvider(Configuration.GetAWSLoggingConfigSection());
-                config.SetMinimumLevel(LogLevel.Debug);
+                config.AddFilter("Program", LogLevel.Warning);
+                //config.AddAWSProvider(Configuration.GetAWSLoggingConfigSection());
             });
 
             services.AddHealthChecks();

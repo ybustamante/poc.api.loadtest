@@ -22,11 +22,11 @@ namespace poc.api.loadtest
             {
                 logging.ClearProviders();
                 logging.AddConsole();
-                logging.AddAWSProvider();
+                //logging.AddAWSProvider();
                 logging.SetMinimumLevel(LogLevel.Information);
             }).ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+            {
+                webBuilder.UseStartup<Startup>();
+            });
     }
 }
