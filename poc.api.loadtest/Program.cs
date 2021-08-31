@@ -7,6 +7,10 @@ namespace poc.api.loadtest
 {
     public class Program
     {
+        /// <summary>
+        /// This is the Bereshit
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
@@ -16,6 +20,11 @@ namespace poc.api.loadtest
             host.Run();
         }
 
+        /// <summary>
+        /// Set Host Builder compatibility and base configuration
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
             .ConfigureLogging(logging =>
