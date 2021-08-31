@@ -60,6 +60,11 @@ namespace poc.api.loadtest
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapGet("/", context =>
+                {
+                    context.Response.Redirect("/swagger/index.html");
+                    return System.Threading.Tasks.Task.CompletedTask;
+                });
                 endpoints.MapHealthChecks("/health", new HealthCheckOptions()
                 {
                     ResultStatusCodes =
