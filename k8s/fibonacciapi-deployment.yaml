@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fibonacciapi-deployment
+  labels:
+    appname: fibonacciapi
+    language: dotnet
+spec:
+  selector:
+    matchLabels:
+      app: fibonacciapi
+  template:
+    metadata:
+      labels:
+        app: fibonacciapi
+    spec:
+      containers:
+      - name: fibonacciapi
+        image: docker.io/ybustamante/fibonacciapi:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8090

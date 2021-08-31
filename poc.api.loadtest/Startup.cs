@@ -32,7 +32,7 @@ namespace poc.api.loadtest
             services.AddLogging(config =>
             {
                 config.AddFilter("Microsoft", LogLevel.Information);
-                config.AddFilter("System", LogLevel.Warning);
+                config.AddFilter("System", LogLevel.Information);
                 config.AddFilter("Program", LogLevel.Warning);
                 //config.AddAWSProvider(Configuration.GetAWSLoggingConfigSection());
             });
