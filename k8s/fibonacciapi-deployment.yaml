@@ -16,10 +16,15 @@ spec:
     spec:
       containers:
       - name: fibonacciapi
-        image: docker.io/ybustamante/fibonacciapi:latest
+        image: docker.io/ybustamante/fibonacciapi@sha256:52924d97c2365827c62b840b02b897d03fde6680e644afb72db66df81057563a
         resources:
           limits:
             memory: "128Mi"
             cpu: "500m"
         ports:
         - containerPort: 8090
+        env:
+          - name: enable_hack
+            value: 'true'
+          - name: Logging__LogLevel__Default
+            value: Debug

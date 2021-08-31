@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace poc.api.loadtest.Controllers
 {
@@ -8,11 +10,13 @@ namespace poc.api.loadtest.Controllers
     public class FibonacciController : ControllerBase
     {
         private ILogger<FibonacciController> _logger;
-        public FibonacciController(ILogger<FibonacciController> logger)
+        private Dictionary<int, int> _dictionary = new Dictionary<int, int>();
+        public static IConfiguration Configuration { get; private set; }
+        public FibonacciController(ILogger<FibonacciController> logger, IConfiguration configuration)
         {
             _logger = logger;
+            Configuration = configuration;
         }
-
 
         [HttpGet]
         public int Get(int position)
@@ -27,23 +31,54 @@ namespace poc.api.loadtest.Controllers
                 _logger.LogError("exception", ex);
                 throw;
             }
-            
         }
 
         private int CalculateFibonacci(int position)
+        {
+            return Configuration["enable_hack"] == "true" ? CalculateFibonacciHack(position) : CalculateFibonacciRecursive(position);
+        }
+
+        private int CalculateFibonacciRecursive(int position)
         {
             _logger.LogInformation($"CalculateFibonacci= {position}");
             if (position == 0 || position == 1)
             {
                 return position;
             }
-            else if (position <0)
+            else if (position < 0)
             {
                 throw new System.Exception("The number must be greater than 1");
             }
             else
             {
-                return CalculateFibonacci(position - 1) + CalculateFibonacci(position - 2);
+                var result = CalculateFibonacci(position - 1) + CalculateFibonacci(position - 2);                
+                return result;
+            }
+        }
+
+        private int CalculateFibonacciHack(int position)
+        {
+            _logger.LogInformation($"CalculateFibonacci= {position}");
+            if (position == 0 || position == 1)
+            {
+                return position;
+            }
+            else if (position < 0)
+            {
+                throw new System.Exception("The number must be greater than 1");
+            }
+            else
+            {
+                if (_dictionary.ContainsKey(position))
+                {
+                    return _dictionary.GetValueOrDefault(position);
+                }
+                else
+                {
+                    var result = CalculateFibonacci(position - 1) + CalculateFibonacci(position - 2);
+                    _dictionary.Add(position, result);
+                    return result;
+                }
             }
         }
 
