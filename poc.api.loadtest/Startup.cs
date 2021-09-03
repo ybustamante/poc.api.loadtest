@@ -30,11 +30,10 @@ namespace poc.api.loadtest
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "poc.api.loadtest", Version = "v1" });
             });
             services.AddLogging(config =>
-            {
-                config.AddFilter("Microsoft", LogLevel.Information);
-                config.AddFilter("System", LogLevel.Information);
-                config.AddFilter("Program", LogLevel.Warning);
-                //config.AddAWSProvider(Configuration.GetAWSLoggingConfigSection());
+            {                
+                config.AddFilter("Microsoft", LogLevel.Warning);
+                config.AddFilter("System", LogLevel.Warning);
+                config.AddFilter("Program", LogLevel.Warning);                
             });
 
             services.AddHealthChecks();
@@ -60,6 +59,10 @@ namespace poc.api.loadtest
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.Map("/", async context =>
+                {
+                    context.Response.Redirect("/swagger/index.html");                    
+                });
                 endpoints.MapHealthChecks("/health", new HealthCheckOptions()
                 {
                     ResultStatusCodes =

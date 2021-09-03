@@ -39,26 +39,24 @@ namespace poc.api.loadtest.Controllers
         }
 
         private int CalculateFibonacciRecursive(int position)
-        {
-            _logger.LogInformation($"CalculateFibonacci= {position}");
+        {            
             if (position == 0 || position == 1)
             {
                 return position;
             }
             else if (position < 0)
-            {
+            {                
                 throw new System.Exception("The number must be greater than 1");
             }
             else
             {
-                var result = CalculateFibonacci(position - 1) + CalculateFibonacci(position - 2);                
+                var result = CalculateFibonacciRecursive(position - 1) + CalculateFibonacciRecursive(position - 2);                
                 return result;
             }
         }
 
         private int CalculateFibonacciHack(int position)
-        {
-            _logger.LogInformation($"CalculateFibonacci= {position}");
+        {            
             if (position == 0 || position == 1)
             {
                 return position;
@@ -75,7 +73,7 @@ namespace poc.api.loadtest.Controllers
                 }
                 else
                 {
-                    var result = CalculateFibonacci(position - 1) + CalculateFibonacci(position - 2);
+                    var result = CalculateFibonacciHack(position - 1) + CalculateFibonacciHack(position - 2);
                     _dictionary.Add(position, result);
                     return result;
                 }
