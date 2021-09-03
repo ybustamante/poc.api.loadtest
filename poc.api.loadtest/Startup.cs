@@ -13,14 +13,24 @@ namespace poc.api.loadtest
 {
     public class Startup
     {
+        /// <summary>
+        /// Ctor with dependency injection of configuration or dependency instances.
+        /// </summary>
+        /// <param name="configuration">Environment variables instance configuration</param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        /// <summary>
+        /// Environment variables instance configuration
+        /// </summary>
+        private IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container app.
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -39,7 +49,11 @@ namespace poc.api.loadtest
             services.AddHealthChecks();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app">application builder</param>
+        /// <param name="env">Environment Host</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -59,9 +73,10 @@ namespace poc.api.loadtest
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.Map("/", async context =>
+                endpoints.MapGet("/", context =>
                 {
-                    context.Response.Redirect("/swagger/index.html");                    
+                    context.Response.Redirect("/swagger/index.html");
+                    return System.Threading.Tasks.Task.CompletedTask;
                 });
                 endpoints.MapHealthChecks("/health", new HealthCheckOptions()
                 {
