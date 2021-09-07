@@ -1,0 +1,10 @@
+execution:
+- concurrency: 20
+  ramp-up: 1m
+  hold-for: 5m
+  scenario: quick-test
+
+scenarios:
+  quick-test:
+    requests:
+    - https://sb.openapis.itau.cl/public/sb/latencyinfo
