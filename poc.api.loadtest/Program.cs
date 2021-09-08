@@ -15,7 +15,7 @@ namespace poc.api.loadtest
         {
             var host = CreateHostBuilder(args).Build();
             var logger = host.Services.GetRequiredService<ILogger<Program>>();
-            logger.LogInformation("From Program, running the host now.");
+            logger.LogInformation("From Program, running the host now.");            
 
             host.Run();
         }
@@ -26,7 +26,12 @@ namespace poc.api.loadtest
         /// <param name="args"></param>
         /// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+            Host.CreateDefaultBuilder(args).ConfigureLogging(logging =>
+            {
+                logging.ClearProviders();
+                logging.AddConsole();                
+                logging.SetMinimumLevel(LogLevel.Information);
+            })
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();

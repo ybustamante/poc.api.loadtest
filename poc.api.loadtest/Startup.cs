@@ -41,9 +41,9 @@ namespace poc.api.loadtest
             });
             services.AddLogging(config =>
             {                
-                config.AddFilter("Microsoft", LogLevel.Warning);
-                config.AddFilter("System", LogLevel.Warning);
-                config.AddFilter("Program", LogLevel.Warning);                
+                config.AddFilter("Microsoft", LogLevel.Information);
+                config.AddFilter("System", LogLevel.Information);
+                config.AddFilter("Program", LogLevel.Information);                
             });
 
             services.AddHealthChecks();
