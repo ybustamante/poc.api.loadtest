@@ -47,6 +47,8 @@ namespace poc.api.loadtest
             });
 
             services.AddHealthChecks();
+
+            services.AddHttpClient();
         }
 
         /// <summary>
