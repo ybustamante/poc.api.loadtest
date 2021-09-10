@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RestSharp;
 using System;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace poc.api.loadtest.Controllers
@@ -23,6 +25,8 @@ namespace poc.api.loadtest.Controllers
 
         // GET: LatencyInfoController
         [HttpGet("/simple")]
+        [ProducesResponseType(StatusCodes.Status502BadGateway)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult Get()
         {
             var response = new latencyInfoRs()
@@ -36,20 +40,24 @@ namespace poc.api.loadtest.Controllers
         }
 
         [HttpGet("/proxy/stateless")]
-        public ActionResult GetProxy()
+        [ProducesResponseType(StatusCodes.Status502BadGateway)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> GetProxy()
         {
             var uriLatencyInfo = new Uri("https://sb.openapis.itau.cl/public/sb/latencyinfo");
             var client = new RestClient(uriLatencyInfo);
             var request = new RestRequest("/", Method.GET, DataFormat.Json);
-            var response = client.Get(request);
+            var response = await client.ExecuteAsync(request);
 
             return new JsonResult(response.Content);            
         }
 
         [HttpGet("/proxy/clientfactory")]
-        public async Task<ActionResult> GetProxySingletonAsync()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status502BadGateway)]
+        public async Task<latencyInfoAPIConnect> GetProxySingletonAsync()
         {
-            var uriLatencyInfo = new System.Uri("https://sb.openapis.itau.cl/public/sb/latencyinfo");
+            var uriLatencyInfo = new Uri("https://sb.openapis.itau.cl/public/sb/latencyinfo");
             var request = new HttpRequestMessage(HttpMethod.Get, uriLatencyInfo);
             request.Headers.Add("Accept", "application/json");
 
@@ -58,15 +66,18 @@ namespace poc.api.loadtest.Controllers
             var response = await client.SendAsync(request);
 
             _logger.LogInformation("Get Proxy Singleton Async " + response);
+
             if (response.IsSuccessStatusCode)
             {
-                var responseStream = await response.Content.ReadAsStringAsync();
+                var responseStream = await response.Content.ReadAsStreamAsync();
+                var resultOk = await JsonSerializer.DeserializeAsync<latencyInfoAPIConnect>(responseStream);
 
-                return Ok(responseStream);
+                return resultOk;
             }
             else
             {
-                return new StatusCodeResult(502);
+                Response.StatusCode = 502;
+                return null;
             }            
         }
     }
@@ -78,5 +89,9 @@ namespace poc.api.loadtest.Controllers
         public int randomInt { get; set; }
     }
 
-
+    public class latencyInfoAPIConnect
+    {
+        public string server { get; set; }
+        public DateTime dateTimeServer { get; set; }
+    }
 }
