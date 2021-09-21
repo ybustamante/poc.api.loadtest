@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using poc.api.loadtest.Models;
 using RestSharp;
 using System;
 using System.Net.Http;
@@ -70,13 +71,4 @@ namespace poc.api.loadtest.Controllers
             }            
         }
     }
-
-    public class latencyInfoRs
-    {
-        public string dateTimeServer { get; set; }
-        public string ipClient { get; set; }
-        public int randomInt { get; set; }
-    }
-
-
 }
