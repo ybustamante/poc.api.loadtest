@@ -1,0 +1,81 @@
+﻿kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v2beta2
+metadata:
+  name: fibonacciapi-deployment
+  namespace: sandboxdeveloperframework
+  uid: 8dda41de-4337-4056-866f-8bb1c6f385ac
+  resourceVersion: '32977735'
+  creationTimestamp: '2021-09-08T00:06:13Z'
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: autoscaling/v2beta2
+      time: '2021-09-08T00:06:13Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:maxReplicas': {}
+          'f:metrics': {}
+          'f:minReplicas': {}
+          'f:scaleTargetRef':
+            'f:apiVersion': {}
+            'f:kind': {}
+            'f:name': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: autoscaling/v1
+      time: '2021-09-10T19:15:18Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:autoscaling.alpha.kubernetes.io/conditions': {}
+            'f:autoscaling.alpha.kubernetes.io/current-metrics': {}
+        'f:status':
+          'f:currentCPUUtilizationPercentage': {}
+          'f:currentReplicas': {}
+          'f:desiredReplicas': {}
+          'f:lastScaleTime': {}
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: fibonacciapi-deployment
+    apiVersion: apps/v1
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+status:
+  lastScaleTime: '2021-09-10T20:15:27Z'
+  currentReplicas: 1
+  desiredReplicas: 1
+  currentMetrics:
+    - type: Resource
+      resource:
+        name: cpu
+        current:
+          averageValue: 22m
+          averageUtilization: 4
+  conditions:
+    - type: AbleToScale
+      status: 'True'
+      lastTransitionTime: '2021-09-08T00:06:28Z'
+      reason: ReadyForNewScale
+      message: recommended size matches current size
+    - type: ScalingActive
+      status: 'True'
+      lastTransitionTime: '2021-09-12T23:50:52Z'
+      reason: ValidMetricFound
+      message: >-
+        the HPA was able to successfully calculate a replica count from cpu
+        resource utilization (percentage of request)
+    - type: ScalingLimited
+      status: 'False'
+      lastTransitionTime: '2021-09-13T17:32:55Z'
+      reason: DesiredWithinRange
+      message: the desired count is within the acceptable range

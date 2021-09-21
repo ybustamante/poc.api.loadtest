@@ -5,4 +5,4 @@ class QuickstartUser(HttpUser):
 
     @task
     def test_simple(self):
-        self.client.get("/")
+        self.client.get("")

@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "poc.api.loadtest", "poc.api.loadtest\poc.api.loadtest.csproj", "{DDD1BAA0-EC27-4E3B-9ED7-B00E03E8BBE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "poc.api.loadtest", "poc.api.loadtest\poc.api.loadtest.csproj", "{DDD1BAA0-EC27-4E3B-9ED7-B00E03E8BBE3}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{72B25ABE-D193-41AD-B80B-C3ADF9079782}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "poc.api.loadtest.test", "..\poc.api.loadtest.test\poc.api.loadtest.test.csproj", "{78032AAC-6306-403A-890C-CCFF6684CBEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{72B25ABE-D193-41AD-B80B-C3ADF9079782}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72B25ABE-D193-41AD-B80B-C3ADF9079782}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72B25ABE-D193-41AD-B80B-C3ADF9079782}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78032AAC-6306-403A-890C-CCFF6684CBEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78032AAC-6306-403A-890C-CCFF6684CBEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78032AAC-6306-403A-890C-CCFF6684CBEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78032AAC-6306-403A-890C-CCFF6684CBEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

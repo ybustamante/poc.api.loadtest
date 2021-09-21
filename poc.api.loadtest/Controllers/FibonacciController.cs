@@ -16,7 +16,7 @@ namespace poc.api.loadtest.Controllers
         {
             _logger = logger;
             Configuration = configuration;
-        }
+        }        
 
         [HttpGet]
         public int Get(int position)
