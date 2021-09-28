@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using poc.api.loadtest.Models;
 using RestSharp;
 using System;
 using System.Net.Http;
