@@ -9,10 +9,10 @@ namespace poc.api.loadtest.Controllers
     [ApiController]
     public class FibonacciController : ControllerBase
     {
-        private ILogger<FibonacciController> _logger;
+        private ILogger _logger;
         private Dictionary<int, int> _dictionary = new Dictionary<int, int>();
         public static IConfiguration Configuration { get; private set; }
-        public FibonacciController(ILogger<FibonacciController> logger, IConfiguration configuration)
+        public FibonacciController(ILogger logger, IConfiguration configuration)
         {
             _logger = logger;
             Configuration = configuration;
