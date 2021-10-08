@@ -12,7 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="nginx\nginx.conf" />
+    <Content Include="nginx\nginx.conf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

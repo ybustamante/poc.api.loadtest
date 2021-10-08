@@ -10,10 +10,10 @@ services:
         - published: 9001
           target: 8090
   poc.api.nginxingress:
-    image: ybustamante/fibonacciapiingess:latest
+    image: ybustamante/fibonacciapiingress:latest
     build:
         context: .
         dockerfile: poc.api.loadtest/DockerfileIngress
     ports:
         - published: 443
-          target: 8090
+          target: 9001
