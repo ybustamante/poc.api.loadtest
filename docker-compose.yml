@@ -7,13 +7,13 @@ services:
       context: .
       dockerfile: poc.api.loadtest/Dockerfile
     ports:
-        - published: 9001
-          target: 8090
+        - published: 8093
+          target: 8093
   poc.api.nginxingress:
     image: ybustamante/fibonacciapiingress:latest
     build:
         context: .
         dockerfile: poc.api.loadtest/DockerfileIngress
     ports:
-        - published: 443
-          target: 9001
+        - published: 7443
+          target: 7443

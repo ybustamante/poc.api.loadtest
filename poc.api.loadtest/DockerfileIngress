@@ -1,3 +1,5 @@
 ﻿FROM nginx
+EXPOSE 7443
 
-COPY ["poc.api.loadtest/nginx/nginx.conf", "/etc/nginx/conf.d/default.conf"]
+COPY poc.api.loadtest/nginx/nginx.conf etc/nginx/nginx.conf
+COPY poc.api.loadtest/nginx/cert/ etc/ssl/
