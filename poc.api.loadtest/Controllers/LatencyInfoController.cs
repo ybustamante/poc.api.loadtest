@@ -6,6 +6,7 @@ using poc.api.loadtest.Models;
 using RestSharp;
 using System;
 using System.Net.Http;
+using System.Net.Mime;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,16 +43,17 @@ namespace poc.api.loadtest.Controllers
         }
 
         [HttpGet("/proxy/stateless")]
+        [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status502BadGateway)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> GetProxy()
+        public async Task<ActionResult<string>> GetProxy()
         {
             var uriLatencyInfo = new Uri("https://sb.openapis.itau.cl/public/sb/latencyinfo");
             var client = new RestClient(uriLatencyInfo);
             var request = new RestRequest("/", Method.GET, DataFormat.Json);
             var response = await client.ExecuteAsync(request);
 
-            return new JsonResult(response.Content);            
+            return Ok(response.Content);
         }
 
         [HttpGet("/proxy/clientfactory")]

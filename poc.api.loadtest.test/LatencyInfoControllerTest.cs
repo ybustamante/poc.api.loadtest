@@ -5,28 +5,65 @@ using NUnit.Framework;
 using poc.api.loadtest.Controllers;
 using System.Net.Http;
 using poc.api.loadtest.Models;
+using Moq.Protected;
+using System.Threading.Tasks;
+using System.Net;
+using System.Threading;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace poc.api.loadtest.test
 {
-    public class Tests
+    public class LatencyInfoControllerTest
     {
-        private LatencyInfoController _latencyInfoController;
+        private IConfiguration _mockIConfiguration;
+        private ILogger _mockILogger;
 
         [SetUp]
         public void Setup()
         {
             var mocklog = new Mock<ILogger>();
             var mockConfig = new Mock<IConfiguration>();
-            var mockHttpClientFactory = new Mock<IHttpClientFactory>();
-            _latencyInfoController = new LatencyInfoController(mocklog.Object, mockConfig.Object, mockHttpClientFactory.Object);
+            _mockIConfiguration = mockConfig.Object;
+            _mockILogger = mocklog.Object;
         }
 
+        //[Test]
+        //public void Get()
+        //{
+        //    var response = _latencyInfoController.Get();
+        //    Assert.IsInstanceOf(typeof(latencyInfoRs), response);
+        //    Assert.Pass();
+        //}
+
         [Test]
-        public void Get()
+        public async Task Should_Return_Ok()
         {
-            var response = _latencyInfoController.Get();
-            Assert.IsInstanceOf(typeof(latencyInfoRs), response);
-            Assert.Pass();
+            var expected = "Hello world";
+            var mockFactory = new Mock<IHttpClientFactory>();
+
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(expected)
+                });
+
+            var httpClient = new HttpClient(mockMessageHandler.Object);
+
+            mockFactory.Setup(o => o.CreateClient(It.IsAny<string>())).Returns(httpClient);
+
+            var controller = new LatencyInfoController(_mockILogger, _mockIConfiguration, mockFactory.Object);
+            
+            var actionResult = await controller.GetProxy();
+
+            var result = (ObjectResult)actionResult;
+            //Assert.IsTrue(result ==  200);
+
+
+            
         }
     }
 }
