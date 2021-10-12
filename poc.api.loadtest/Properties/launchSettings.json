@@ -32,8 +32,9 @@
       "launchBrowser": true,
       "applicationUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "launchUrl": "swagger",
+      "httpPort": 8090,
       "publishAllPorts": true,
       "useSSL": false
-    }
+    }    
   }
 }
