@@ -13,7 +13,7 @@ namespace poc.api.loadtest.test
         [SetUp]
         public void Setup()
         {
-            var mocklog = new Mock<ILogger>();
+            var mocklog = new Mock<ILogger<FibonacciController>>();
             var mockConfig = new Mock<IConfiguration>();
             _fibonacciController = new FibonacciController(mocklog.Object, mockConfig.Object);
         }
