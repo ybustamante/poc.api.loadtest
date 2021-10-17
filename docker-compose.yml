@@ -17,3 +17,20 @@ services:
     ports:
         - published: 7443
           target: 7443
+    environment: 
+        SSL_Server_Certificate: |
+            -----BEGIN CERTIFICATE-----
+            MIIEWzCCA0OgAwIBAgIJALMB1GItlJExMA0GCSqGSIb3DQEBCwUAMIGDMQswCQYD
+            FWVwJcX8zm/b7bXNJdwX
+            -----END CERTIFICATE-----
+        SSL_Server_key: |
+            -----BEGIN RSA PRIVATE KEY-----
+            MIIEpQIBAAKCAQEArD22Jw/CWyyzxFnUnCsWtKN/jg2BVht6Eo5703og45LrJ5gB
+            /JbxCUFWf8X3X7JPOn+Hlz/VvOXKy0gxhSAtb9vd+5z0RGeZ8IL9+2o=
+            -----END RSA PRIVATE KEY-----
+        SSL_Client_Certificate: |
+            -----BEGIN DH PARAMETERS-----
+            MIIBCAKCAQEAsSKY3K9w6VmRv4Mn7AAXK/U6S6DbBflqUNmEBsVkRUhSU15GVayj
+            wOI8ijB2iWUCkh8uPklI8Z9NgQxetVS36wIBAg==
+            -----END DH PARAMETERS-----
+    

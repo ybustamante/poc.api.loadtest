@@ -3,3 +3,12 @@ EXPOSE 7443
 
 COPY poc.api.loadtest/nginx/nginx.conf etc/nginx/nginx.conf
 COPY poc.api.loadtest/nginx/cert/ etc/ssl/
+
+RUN echo "$SSL_Server_Certificate" >> /etc/ssl/ssl_server_cert.crt \
+    echo "$SSL_Server_key" >> /etc/ssl/ssl_server_key.key \
+    echo "$SSL_Client_Certificate" >> /etc/ssl/ssl_client_cert.pem 
+#RUN \
+#        [ -n "$SSL_Server_Certificate" ] && echo "$SSL_Server_Certificate" >> /etc/ssl/ssl_server_cert.crt \
+#        [ -n "${SSL_Server_key}" ] && echo "$SSL_Server_key" >> /etc/ssl/ssl_server_key.key \
+#        [ -n "${SSL_Client_Certificate}" ] && echo "$SSL_Client_Certificate" >> /etc/ssl/ssl_client_cert.pem 
+#

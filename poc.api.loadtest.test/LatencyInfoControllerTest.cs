@@ -59,8 +59,8 @@ namespace poc.api.loadtest.test
             
             var actionResult = await controller.GetProxy();
 
-            var result = (ObjectResult)actionResult;
-            //Assert.IsTrue(result ==  200);
+            var result = actionResult.Result;
+            //Assert.IsTrue(result. ==  200);
 
 
             
