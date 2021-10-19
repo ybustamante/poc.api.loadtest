@@ -39,7 +39,7 @@ namespace poc.api.loadtest.test
         [Test]
         public async Task Should_Return_Ok()
         {
-            var expected = "Hello world";
+            var expectedMessage = "Hello world";
             var mockFactory = new Mock<IHttpClientFactory>();
 
             var mockMessageHandler = new Mock<HttpMessageHandler>();
@@ -48,7 +48,7 @@ namespace poc.api.loadtest.test
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(expected)
+                    Content = new StringContent(expectedMessage)
                 });
 
             var httpClient = new HttpClient(mockMessageHandler.Object);
@@ -59,11 +59,8 @@ namespace poc.api.loadtest.test
             
             var actionResult = await controller.GetProxy();
 
-            var result = actionResult.Result;
-            //Assert.IsTrue(result. ==  200);
-
-
-            
+            var result = actionResult.Result as ObjectResult;
+            Assert.IsTrue(result.StatusCode ==  200);            
         }
     }
 }
