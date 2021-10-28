@@ -24,6 +24,8 @@ namespace poc.api.loadtest.Controllers
             try
             {
                 _logger.LogInformation($"Fibonacci GET {position}");
+                var secret = Configuration["secret"];
+                _logger.LogInformation("secretValue= " + secret);
                 return CalculateFibonacci(position);
             }
             catch (System.Exception ex)

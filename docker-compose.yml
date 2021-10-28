@@ -9,6 +9,9 @@ services:
     ports:
         - published: 8093
           target: 8093
+    environment: 
+        ASPNETCORE_URLS: http://+:8093
+        Logging__LogLevel__Default: Information        
   poc.api.nginxingress:
     image: ybustamante/fibonacciapiingress:latest
     build:
@@ -78,30 +81,30 @@ services:
           wUg8wKtncaOXjZSc9tfc3Uza9eBeiIFkrhFOpg1Xtt6YtoTudU51WEU=
           -----END RSA PRIVATE KEY-----
         SSL_Client_Certificate: |
-          -----BEGIN CERTIFICATE-----
-          MIIEpTCCA42gAwIBAgIQE9e1C6bvbbVK0Tov2JHjXDANBgkqhkiG9w0BAQUFADBA
-          MRIwEAYKCZImiZPyLGQBGRYCY2wxGTAXBgoJkiaJk/IsZAEZFglJdGF1Y2hpbGUx
-          DzANBgNVBAMTBkNBSVRBVTAeFw0xODA2MDgxNjIxMzJaFw0yMzA2MDgxNjI4MTda
-          MEAxEjAQBgoJkiaJk/IsZAEZFgJjbDEZMBcGCgmSJomT8ixkARkWCUl0YXVjaGls
-          ZTEPMA0GA1UEAxMGQ0FJVEFVMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-          AQEAmiUxMPo+q6AyD3ntiChAD/CP+PR6kEqMiQfbZvqEjsSu350WQCPS6HiPSKmk
-          50zRlJ1KRJMZC+zKUcMW3h8NSfoa8ZQCcg+B04flaUm94kytubU5oJvMaqKl9uei
-          90iPzGhFoy3DPyO3bm7usEk6vklYDGIdOJ00r+j8eQMJKkcs8IViCL+fRBDqLfjU
-          FwUFp7NupD4msVDtgHDuhdxtempJ8tQhRz73W4Q/rcf431peqCZDjNXrUSGlTSgb
-          J/ZCFkIsgmrXjqOaj49aYgO0wJEHAjRsZkfyzH2kHy89I6HIPx2VuOBLd9l66+gj
-          FDZbvldTW7uCbhjMTukvkzzw6QIDAQABo4IBmTCCAZUwEwYJKwYBBAGCNxQCBAYe
-          BABDAEEwCwYDVR0PBAQDAgFGMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFJWE
-          KhF6b2HJ6qOQ4cXmhQHKTq4CMIIBBgYDVR0fBIH+MIH7MIH4oIH1oIHyhoG1bGRh
-          cDovLy9DTj1DQUlUQVUoMSksQ049Y2xzdGdjZXJwMDEsQ049Q0RQLENOPVB1Ymxp
-          YyUyMEtleSUyMFNlcnZpY2VzLENOPVNlcnZpY2VzLENOPUNvbmZpZ3VyYXRpb24s
-          REM9SXRhdWNoaWxlLERDPWNsP2NlcnRpZmljYXRlUmV2b2NhdGlvbkxpc3Q/YmFz
-          ZT9vYmplY3RDbGFzcz1jUkxEaXN0cmlidXRpb25Qb2ludIY4aHR0cDovL2Nsc3Rn
-          Y2VycDAxLml0YXVjaGlsZS5jbC9DZXJ0RW5yb2xsL0NBSVRBVSgxKS5jcmwwEgYJ
-          KwYBBAGCNxUBBAUCAwcABzAjBgkrBgEEAYI3FQIEFgQUP8OpSoV4NWc+rIMrfn6T
-          c2e3w84wDQYJKoZIhvcNAQEFBQADggEBACJ3KhIgpc18cQkkrp+d6JMZA/Bc6AiA
-          hRJMOCDtyLk4N1Dqt7ZlQ+NueJ6zuHkhWYDiBUMa+LE4sMjm+9gOLxdr3mREzZhk
-          cBbp+q0p3cHuhO+W70B9cYQb++Aym78jfuDKkp0Tu1GnnzabuNELeEBhgaF+bIG1
-          HH55TaSP5MguyEH48TGDR0KewZHnPFwG4ZIA4AKOcxjejoIjFLkDvdtNbZtCmron
-          E7VraRkzw2R8IK7yARdx5adBmhsvjGtcm4ZufubgkLquKA9+7BeE+w4p79RR+GOg
-          fJyxr2O0LwG+bw/NDWN4tv0IKvYM0Sl969HUan2e9FBZdQElhMrXDG4=
-          -----END CERTIFICATE-----
+            -----BEGIN CERTIFICATE-----
+            MIIEpTCCA42gAwIBAgIQE9e1C6bvbbVK0Tov2JHjXDANBgkqhkiG9w0BAQUFADBA
+            MRIwEAYKCZImiZPyLGQBGRYCY2wxGTAXBgoJkiaJk/IsZAEZFglJdGF1Y2hpbGUx
+            DzANBgNVBAMTBkNBSVRBVTAeFw0xODA2MDgxNjIxMzJaFw0yMzA2MDgxNjI4MTda
+            MEAxEjAQBgoJkiaJk/IsZAEZFgJjbDEZMBcGCgmSJomT8ixkARkWCUl0YXVjaGls
+            ZTEPMA0GA1UEAxMGQ0FJVEFVMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+            AQEAmiUxMPo+q6AyD3ntiChAD/CP+PR6kEqMiQfbZvqEjsSu350WQCPS6HiPSKmk
+            50zRlJ1KRJMZC+zKUcMW3h8NSfoa8ZQCcg+B04flaUm94kytubU5oJvMaqKl9uei
+            90iPzGhFoy3DPyO3bm7usEk6vklYDGIdOJ00r+j8eQMJKkcs8IViCL+fRBDqLfjU
+            FwUFp7NupD4msVDtgHDuhdxtempJ8tQhRz73W4Q/rcf431peqCZDjNXrUSGlTSgb
+            J/ZCFkIsgmrXjqOaj49aYgO0wJEHAjRsZkfyzH2kHy89I6HIPx2VuOBLd9l66+gj
+            FDZbvldTW7uCbhjMTukvkzzw6QIDAQABo4IBmTCCAZUwEwYJKwYBBAGCNxQCBAYe
+            BABDAEEwCwYDVR0PBAQDAgFGMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFJWE
+            KhF6b2HJ6qOQ4cXmhQHKTq4CMIIBBgYDVR0fBIH+MIH7MIH4oIH1oIHyhoG1bGRh
+            cDovLy9DTj1DQUlUQVUoMSksQ049Y2xzdGdjZXJwMDEsQ049Q0RQLENOPVB1Ymxp
+            YyUyMEtleSUyMFNlcnZpY2VzLENOPVNlcnZpY2VzLENOPUNvbmZpZ3VyYXRpb24s
+            REM9SXRhdWNoaWxlLERDPWNsP2NlcnRpZmljYXRlUmV2b2NhdGlvbkxpc3Q/YmFz
+            ZT9vYmplY3RDbGFzcz1jUkxEaXN0cmlidXRpb25Qb2ludIY4aHR0cDovL2Nsc3Rn
+            Y2VycDAxLml0YXVjaGlsZS5jbC9DZXJ0RW5yb2xsL0NBSVRBVSgxKS5jcmwwEgYJ
+            KwYBBAGCNxUBBAUCAwcABzAjBgkrBgEEAYI3FQIEFgQUP8OpSoV4NWc+rIMrfn6T
+            c2e3w84wDQYJKoZIhvcNAQEFBQADggEBACJ3KhIgpc18cQkkrp+d6JMZA/Bc6AiA
+            hRJMOCDtyLk4N1Dqt7ZlQ+NueJ6zuHkhWYDiBUMa+LE4sMjm+9gOLxdr3mREzZhk
+            cBbp+q0p3cHuhO+W70B9cYQb++Aym78jfuDKkp0Tu1GnnzabuNELeEBhgaF+bIG1
+            HH55TaSP5MguyEH48TGDR0KewZHnPFwG4ZIA4AKOcxjejoIjFLkDvdtNbZtCmron
+            E7VraRkzw2R8IK7yARdx5adBmhsvjGtcm4ZufubgkLquKA9+7BeE+w4p79RR+GOg
+            fJyxr2O0LwG+bw/NDWN4tv0IKvYM0Sl969HUan2e9FBZdQElhMrXDG4=
+            -----END CERTIFICATE-----

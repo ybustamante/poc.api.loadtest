@@ -5,5 +5,5 @@ COPY poc.api.loadtest/nginx/nginx.conf etc/nginx/nginx.conf
 #COPY poc.api.loadtest/nginx/cert/ etc/ssl/
 COPY poc.api.loadtest/nginx/docker-set-certificates.sh etc/ssl/
 
-ENTRYPOINT [ "/etc/ssl/docker-set-certificates.sh" ]
+ENTRYPOINT ["sh", "/etc/ssl/docker-set-certificates.sh"]
 CMD ["nginx", "-g", "daemon off;"]
