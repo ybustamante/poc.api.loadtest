@@ -17,12 +17,12 @@ namespace poc.api.loadtest.test
     public class LatencyInfoControllerTest
     {
         private IConfiguration _mockIConfiguration;
-        private ILogger _mockILogger;
+        private ILogger<LatencyInfoController> _mockILogger;
 
         [SetUp]
         public void Setup()
         {
-            var mocklog = new Mock<ILogger>();
+            var mocklog = new Mock<ILogger<LatencyInfoController>>();
             var mockConfig = new Mock<IConfiguration>();
             _mockIConfiguration = mockConfig.Object;
             _mockILogger = mocklog.Object;
