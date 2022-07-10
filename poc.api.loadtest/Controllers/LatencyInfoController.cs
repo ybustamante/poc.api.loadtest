@@ -17,10 +17,10 @@ namespace poc.api.loadtest.Controllers
     [ApiController]
     public class LatencyInfoController : ControllerBase
     {
-        private ILogger _logger;
+        private ILogger<LatencyInfoController> _logger;
         private IHttpClientFactory _clientFactory;
 
-        public LatencyInfoController(ILogger logger, IConfiguration configuration, IHttpClientFactory clientFactory)
+        public LatencyInfoController(ILogger<LatencyInfoController> logger, IConfiguration configuration, IHttpClientFactory clientFactory)
         {
             _logger = logger;
             _clientFactory = clientFactory;
@@ -55,34 +55,32 @@ namespace poc.api.loadtest.Controllers
 
             return Ok(response.Content);
         }
-
-        [HttpGet("/proxy/clientfactory")]
+                     
+        [HttpPost("/proxy/clientfactory")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status502BadGateway)]
-        public async Task<latencyInfoAPIConnect> GetProxySingletonAsync()
+        public async Task<ActionResult<string>> GetProxySingletonAsync(GetProxySingletonAsyncRs uri)
         {
-            var uriLatencyInfo = new Uri("https://sb.openapis.itau.cl/public/sb/latencyinfo");
+            _logger.LogInformation("Get Proxy Singleton Async to URI " + uri);            
+            var uriLatencyInfo = new Uri(uri.uri);
             var request = new HttpRequestMessage(HttpMethod.Get, uriLatencyInfo);
             request.Headers.Add("Accept", "application/json");
 
             var client = _clientFactory.CreateClient();
 
-            var response = await client.SendAsync(request);
+            var response = await client.GetAsync(uri.uri);
 
             _logger.LogInformation("Get Proxy Singleton Async " + response);
 
             if (response.IsSuccessStatusCode)
             {
-                var responseStream = await response.Content.ReadAsStreamAsync();
-                var resultOk = await JsonSerializer.DeserializeAsync<latencyInfoAPIConnect>(responseStream);
-
-                return resultOk;
+                return Ok(response.Content);
             }
             else
             {
                 Response.StatusCode = 502;
                 return null;
-            }            
+            }
         }
     }
 
@@ -90,5 +88,10 @@ namespace poc.api.loadtest.Controllers
     {
         public string server { get; set; }
         public DateTime dateTimeServer { get; set; }
+    }
+
+    public class GetProxySingletonAsyncRs
+    {
+        public string uri { get; set; }
     }
 }

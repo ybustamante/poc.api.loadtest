@@ -8,6 +8,8 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
 
 namespace poc.api.loadtest
 {
@@ -58,6 +60,14 @@ namespace poc.api.loadtest
         /// <param name="env">Environment Host</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //The Internals certificate endpoints on API Connect are Internals CA, and the apps not recognized. Add CA to container to allow SSL SelfSign is not recommended, because the the CA is variant between environments
+            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+
+            ServicePointManager.ServerCertificateValidationCallback = delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+            {
+                return true;
+            };
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -80,7 +90,7 @@ namespace poc.api.loadtest
                     context.Response.Redirect("/swagger/index.html");
                     return System.Threading.Tasks.Task.CompletedTask;
                 });
-                endpoints.MapHealthChecks("/health", new HealthCheckOptions()
+                endpoints.MapHealthChecks("/healthcheck", new HealthCheckOptions()
                 {
                     ResultStatusCodes =
                     {
