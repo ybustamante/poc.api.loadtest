@@ -1,6 +1,27 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fibonacciapi
+
+---
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: fibonacciapi
+  namespace: fibonacciapi
+spec:
+  hard:
+    #requests.cpu: "500m"  
+    limits.cpu: "300m"
+    limits.memory: "500Mi"
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: fibonacciapi
   name: fibonacciapi-deployment
   labels:
     appname: fibonacciapi
@@ -18,13 +39,79 @@ spec:
       - name: fibonacciapi
         image: docker.io/ybustamante/fibonacciapi@sha256:52924d97c2365827c62b840b02b897d03fde6680e644afb72db66df81057563a
         resources:
+          requests:
+            memory: "60Mi"
+            cpu: "80m"
           limits:
             memory: "128Mi"
-            cpu: "500m"
+            cpu: "120m"
         ports:
         - containerPort: 8090
         env:
           - name: enable_hack
-            value: 'true'
+            value: 'false'
           - name: Logging__LogLevel__Default
             value: Debug
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fibonacciapi
+  namespace: fibonacciapi
+  labels:
+    appname: fibonacciapi
+    language: dotnet
+spec:
+  selector:
+    app: fibonacciapi
+  ports:
+  - port: 8090
+    name: 8090-fibonacciapiport  
+  #type: LoadBalancer
+
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fibonacciapi
+  namespace: fibonacciapi
+  labels:
+    name: fibonacciapi
+spec:
+  ingressClassName: ingress-internal
+  rules:
+  - host: "localhost"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: fibonacciapi
+            port: 
+              number: 8090
+
+---
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: fibonacciapi
+  namespace: fibonacciapi
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: fibonacciapi
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
