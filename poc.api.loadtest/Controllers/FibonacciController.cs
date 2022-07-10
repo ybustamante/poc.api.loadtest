@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace poc.api.loadtest.Controllers
 {
@@ -19,7 +20,7 @@ namespace poc.api.loadtest.Controllers
         }        
 
         [HttpGet]
-        public int Get(int position)
+        public async Task<ActionResult<int>> Get(int position)
         {
             try
             {

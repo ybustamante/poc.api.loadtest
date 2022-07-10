@@ -9,7 +9,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
 
 namespace poc.api.loadtest
 {
@@ -62,11 +61,6 @@ namespace poc.api.loadtest
         {
             //The Internals certificate endpoints on API Connect are Internals CA, and the apps not recognized. Add CA to container to allow SSL SelfSign is not recommended, because the the CA is variant between environments
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
-
-            ServicePointManager.ServerCertificateValidationCallback = delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-            {
-                return true;
-            };
 
             if (env.IsDevelopment())
             {
